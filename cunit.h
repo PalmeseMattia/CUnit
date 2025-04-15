@@ -1,5 +1,5 @@
-#ifndef XTAL_H
-# define XTAL_H
+#ifndef CUNIT_H
+# define CUNIT_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,6 +30,46 @@
 # define PRINT_FAILED printf("%sTest failed with status %d %s%s\n\n", RED, WEXITSTATUS(status), CROSS, RESET)
 # define PRINT_LINE printf("__________________________\n");
 
+/*
+ * ASSERTIONS
+ */
+# define ASSERT_EQUAL_INT(expected, actual) \
+    if (expected != actual) { \
+        fprintf(stderr, "Assertion failed: expected %d, got %d\n", expected, actual); \
+        exit(EXIT_FAILURE); \
+    }
+
+# define ASSERT_EQUAL_STR(expected, actual) \
+    for (int i = 0; expected[i]; i++) { \
+        if (expected[i] != actual[i] || !actual[i]) { \
+            fprintf(stderr, "Assertion failed: Strings differ at index %d.\nExpected \"%s\", got \"%s\"\n", i, expected, actual); \
+            exit(EXIT_FAILURE); \
+        } \
+    }
+
+# define ASSERT_TRUE(condition) \
+    if (!condition) { \
+        fprintf(stderr, "Assertion failed: Condition is false\n"); \
+        exit(EXIT_FAILURE); \
+    }
+
+# define ASSERT_FALSE(condition) \
+    if (condition) { \
+        fprintf(stderr, "Assertion failed: Condition is true\n"); \
+        exit(EXIT_FAILURE); \
+    }
+
+# define ASSERT_NOT_NULL(stuff) \
+    if (stuff == NULL) { \
+        fprintf(stderr, "Assertion failed: Memory points to null\n"); \
+        exit(EXIT_FAILURE); \
+    }
+
+# define ASSERT_NULL(stuff) \
+    if (stuff != NULL) { \
+        fprintf(stderr, "Assertion failed: Memory do not points to null\n"); \
+        exit(EXIT_FAILURE); \
+    }
 
 typedef void (*testcase)();
 
@@ -95,45 +135,5 @@ void run_tests()
     tests = NULL;
 }
 
-/*
- * ASSERTIONS
- */
-# define ASSERT_EQUAL_INT(expected, actual) \
-    if (expected != actual) { \
-        fprintf(stderr, "Assertion failed: expected %d, got %d\n", expected, actual); \
-        exit(EXIT_FAILURE); \
-    }
-
-# define ASSERT_EQUAL_STR(expected, actual) \
-    for (int i = 0; expected[i]; i++) { \
-        if (expected[i] != actual[i] || !actual[i]) { \
-            fprintf(stderr, "Assertion failed: Strings differ at index %d.\nExpected \"%s\", got \"%s\"\n", i, expected, actual); \
-            exit(EXIT_FAILURE); \
-        } \
-    }
-
-# define ASSERT_TRUE(condition) \
-    if (!condition) { \
-        fprintf(stderr, "Assertion failed: Condition is false\n"); \
-        exit(EXIT_FAILURE); \
-    }
-
-# define ASSERT_FALSE(condition) \
-    if (condition) { \
-        fprintf(stderr, "Assertion failed: Condition is true\n"); \
-        exit(EXIT_FAILURE); \
-    }
-
-# define ASSERT_NOT_NULL(stuff) \
-    if (stuff == NULL) { \
-        fprintf(stderr, "Assertion failed: Memory points to null\n"); \
-        exit(EXIT_FAILURE); \
-    }
-
-# define ASSERT_NULL(stuff) \
-    if (stuff != NULL) { \
-        fprintf(stderr, "Assertion failed: Memory do not points to null\n"); \
-        exit(EXIT_FAILURE); \
-    }
 
 #endif

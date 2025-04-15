@@ -1,4 +1,4 @@
-# Xtal
+# CUnit
 
 Simple and automatic single header C unit testing tool.
 
@@ -6,7 +6,7 @@ Take a look at the example.
 
 ### Syntax:
 ```c
-#include "../xtal.h"
+#include "../cunit.h"
 
 TEST(test_one) {
 	ASSERT_EQUAL_STR("bello", "bello");
