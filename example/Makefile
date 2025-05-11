@@ -2,10 +2,12 @@ SRCS := $(wildcard *.c)
 
 EXECS := $(SRCS:.c=)
 
+CC ?= gcc
+
 all : $(EXECS)
 
 %: %.c
-	gcc $< -o $@
+	$(CC) $< -o $@
 
 clean:
 	rm -f $(EXECS)

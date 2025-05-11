@@ -9,7 +9,7 @@ TEST(test_two) {
 }
 
 TEST(test_three) {
-	int *p = NULL;
+	int *volatile p = NULL;
 	*p = 42;
 	ASSERT_EQUAL_INT(42, *p);
 }
